@@ -1,0 +1,47 @@
+/* ===========================
+   Sidebar Font Sizes
+=========================== */
+
+/* Sidebar title */
+section[data-testid="stSidebar"] h1 {
+    font-size: 1.7rem !important;
+}
+
+/* Sidebar subheaders */
+section[data-testid="stSidebar"] h2,
+section[data-testid="stSidebar"] h3 {
+    font-size: 1.15rem !important;
+}
+
+/* Sidebar normal text */
+section[data-testid="stSidebar"] p,
+section[data-testid="stSidebar"] label,
+section[data-testid="stSidebar"] span,
+section[data-testid="stSidebar"] div {
+    font-size: 0.92rem !important;
+}
+
+/* Radio button labels */
+section[data-testid="stSidebar"] [role="radiogroup"] label p {
+    font-size: 0.95rem !important;
+}
+
+/* Success, Error and Info boxes */
+section[data-testid="stSidebar"] [data-testid="stAlert"] {
+    font-size: 0.9rem !important;
+}
+
+/* Metric label */
+section[data-testid="stSidebar"] [data-testid="stMetricLabel"] {
+    font-size: 0.9rem !important;
+}
+
+/* Metric value (95.2%) */
+section[data-testid="stSidebar"] [data-testid="stMetricValue"] {
+    font-size: 2rem !important;
+}
+
+/* Caption */
+section[data-testid="stSidebar"] [data-testid="stCaptionContainer"] {
+    font-size: 0.8rem !important;
+}

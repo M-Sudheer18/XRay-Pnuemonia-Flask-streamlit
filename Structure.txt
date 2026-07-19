@@ -1,0 +1,79 @@
+chest-xray-pneumonia/
+│
+├── backend/
+│   ├── app.py              # Flask REST API
+│   ├── predictor.py        # Model inference
+│   ├── preprocess.py       # Image preprocessing
+│   ├── config.py
+│   ├── models/
+│   │     └── best_model.keras
+│   └── requirements.txt
+│
+├── frontend/
+│   ├── streamlit_app.py
+│   ├── style.css
+│   ├── assets/
+│   └── components.py
+│
+├── screenshots/
+├── README.md
+└── requirements.txt
+
+
+
+# App.py
+--------
+Basic 
+-----
+# import streamlit as st
+# import tensorflow as tf
+# import numpy as np
+# import pandas as pd
+# from io import BytesIO
+# import PIL.Image as image
+
+
+# # HTML Header
+# html_temp = """
+# <div style="background-color:red;padding:10px">
+#     <h2 style="color:white;text-align:center;">
+#         X-Ray Image Classifier
+#     </h2>
+# </div>
+# """
+
+# st.markdown(html_temp, unsafe_allow_html=True)
+# img_size = 100
+# Categories = ['NORMAL', 'PNEUMONIA']
+
+# model = tf.keras.models.load_model('')
+
+# def load_classifier():
+#     st.subheader("Upload an X-Ray image to Detect if it is Normal or it has Pnuemonia")
+#     file = st.file_uploader(label = ' ', type = ['jpeg', 'jpg', 'png'])
+    
+#     if file != None:
+
+#         # Convert Uploaded File to in-memory Image Object
+#         img = image.open(BytesIO(file.read()))
+#         img = img.resize((img_size, img_size))
+#         new_array = tf.keras.preprocessing.image.img_to_array(img)
+#         new_array = new_array.reshape(-1, img_size, img_size, 3)
+#         st.image(file)
+#         st.write('')
+#         st.write('')
+
+#         if st.button("Predict"):
+#             # Making Prediction
+#             preds = ''
+#             prediction = model.predict(new_array / 255.0)
+#             print(prediction)
+#             print(round(prediction[0][0]))
+#             preds = Categories[int(round(prediction[0][0]))] + ' - ' + str(round(prediction))
+#             st.write(preds)
+
+# def main():
+#     load_classifier()
+
+# if __name__ == '__main__':
+#     main()

@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual Environment
+venv/
+.venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Uploads
+backend/uploads/*
+
+# Local models (if any)
+backend/models/*
+
+# Notebook checkpoints
+.ipynb_checkpoints/
+
+# TensorFlow logs
+logs/
+
+# Environment variables
+.env
+
+# Build artifacts
+dist/
+build/
