@@ -1,0 +1,9 @@
+Flask
+tensorflow
+keras
+numpy
+pillow
+h5py
+huggingface_hub
+requests
+gunicorn
