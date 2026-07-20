@@ -5,31 +5,25 @@ import requests
 
 # Flask Backend URL
 
-BASE_URL = "https://xray-pnuemonia-flask-streamlit.onrender.com"
+CNN_BACKEND = "https://xray-pnuemonia-flask-streamlit-1.onrender.com"
+VGG_BACKEND = "https://xray-pnuemonia-flask-streamlit-2.onrender.com"
 
-PREDICT_URL = f"{BASE_URL}/predict"
-HEALTH_URL  = f"{BASE_URL}/health"
+
 
 # Check Backend Status
 def check_status():
     """
     Checks whether the Flask backend is running.
-
-    Returns
-    -------
-    bool
-        True if backend is available.
-        False otherwise.
     """
 
     try:
         response = requests.get(
-            HEALTH_URL,
+            f"{CNN_BACKEND}/health",
             timeout=5
         )
 
         return response.status_code == 200
-    
+
     except requests.exceptions.RequestException:
         return False
     
@@ -56,6 +50,11 @@ def predict_image(image_file, model_name):
     dict
         JSON response from Flask.
     """
+    if model_name == "vgg16":
+        predict_url = f"{VGG_BACKEND}/predict"
+    else:
+        predict_url = f"{CNN_BACKEND}/predict"
+
     # Reset the file pointer
     image_file.seek(0)
 
@@ -74,7 +73,7 @@ def predict_image(image_file, model_name):
 
     try:
         response = requests.post(
-            PREDICT_URL,
+            predict_url,
             files=files,
             data=data,
             timeout=60
