@@ -1,50 +1,58 @@
 from huggingface_hub import hf_hub_download
 from tensorflow.keras.models import load_model
+from tensorflow.keras import backend as K
+import gc
 
 from config import HF_REPO_ID, MODEL_FILES
 
-
-
-# Download Models from Hugging Face
-print("Downloading models from Hugging Face...")
+# Download model files from Hugging Face
+print("Downloading model files from Hugging Face...", flush=True)
 
 MODEL_PATHS = {
-    model_name : hf_hub_download(
+    model_name: hf_hub_download(
         repo_id=HF_REPO_ID,
         filename=model_file
-    ) for model_name, model_file in MODEL_FILES.items()
+    )
+    for model_name, model_file in MODEL_FILES.items()
 }
-print("All models loaded successfully.")
+
+print("Model files downloaded successfully.", flush=True)
+
+# Store only ONE loaded model
+_CURRENT_MODEL = None
+_CURRENT_MODEL_NAME = None
 
 
-
-# Load Models
-print("Loading models... Please wait.")
-
-MODELS = {
-    model_name: load_model(model_path)
-    for model_name, model_path in MODEL_PATHS.items()
-}
-print("All models downloaded successfully.")
-    
-
-
-
-# Get Selected Model
 def get_model(model_name: str):
     """
-    Returns the selected loaded model.
-
-    Parameters
-    ----------
-    model_name : str
-        cnn10, cnn20 or vgg16
-
-    Returns
-    -------
-    tensorflow.keras.Model
+    Load only the requested model.
+    Unload the previous model if a different model is requested.
     """
-    if model_name not in MODELS:
-        raise ValueError(f'Invalid Model: {model_name}')
-        
-    return MODELS[model_name]
+
+    global _CURRENT_MODEL, _CURRENT_MODEL_NAME
+
+    if model_name not in MODEL_PATHS:
+        raise ValueError(f"Invalid model: {model_name}")
+
+    # Already loaded
+    if _CURRENT_MODEL_NAME == model_name:
+        return _CURRENT_MODEL
+
+    # Unload previous model
+    if _CURRENT_MODEL is not None:
+        print(f"Unloading {_CURRENT_MODEL_NAME}...", flush=True)
+
+        _CURRENT_MODEL = None
+        _CURRENT_MODEL_NAME = None
+
+        K.clear_session()
+        gc.collect()
+
+    print(f"Loading {model_name}...", flush=True)
+
+    _CURRENT_MODEL = load_model(MODEL_PATHS[model_name])
+    _CURRENT_MODEL_NAME = model_name
+
+    print(f"{model_name} loaded successfully.", flush=True)
+
+    return _CURRENT_MODEL

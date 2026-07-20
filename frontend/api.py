@@ -5,7 +5,7 @@ import requests
 
 # Flask Backend URL
 
-BASE_URL = "http://127.0.0.1:5000"
+BASE_URL = "https://xray-pnuemonia-flask-streamlit.onrender.com"
 
 PREDICT_URL = f"{BASE_URL}/predict"
 HEALTH_URL  = f"{BASE_URL}/health"
@@ -79,6 +79,16 @@ def predict_image(image_file, model_name):
             data=data,
             timeout=60
         )
+
+        print("Status Code:", response.status_code)
+        print("Response:", response.text)
+
+        if response.status_code != 200:
+            return {
+                "success": False,
+                "error": f"Backend Error ({response.status_code}): {response.text}"
+            }
+
         return response.json()
     
     except requests.exceptions.RequestException:
