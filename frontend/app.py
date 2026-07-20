@@ -146,6 +146,11 @@ with center:
                     model
                 )
 
+            # Show backend error instead of crashing
+            if "error" in result:
+                st.error(result["error"])
+                st.stop()
+
             prediction = result["prediction"]
             confidence = result["confidence"]
 
