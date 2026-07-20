@@ -4,6 +4,7 @@
 # from api import *
 import streamlit as st
 from PIL import Image
+from pathlib import Path
 from api import check_status, predict_image
 
 
@@ -15,7 +16,9 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 # Load CSS
-with open("style.css") as f:
+CSS_FILE = Path(__file__).parent / "style.css"
+
+with open(CSS_FILE, encoding="utf-8") as f:
     st.markdown(
         f"<style>{f.read()}</style>",
         unsafe_allow_html=True
